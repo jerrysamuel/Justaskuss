@@ -1,0 +1,4 @@
+release: python manage.py migrate
+web: gunicorn getaphone.wsgi --log-file=-
+web: npm start
+web: npx tailwindcss -i ./products/static/src/input.css -o ./static/src/output.css --watch
