@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-9=phw6vdue%s*v(^k0@=x0iczt0u2e4m$#-!q%6m11c!51vcip
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['justaskuss.herokuapp.com']
 
 
 # Application definition
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'mynewdevice.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd43avqvjm1jpi9',
+        'USER': 'dlybmfuswvjtec',
+        'PASSWORD': 'e3c19716672eb4f71c5939fbbab1d25b3040856724f86886a58c0ef57af693f2',
+        'HOST': 'ec2-23-20-140-229.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -116,7 +122,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
