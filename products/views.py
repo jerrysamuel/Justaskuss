@@ -8,3 +8,16 @@ def index(request):
 def productss(request):
     phones =Product.objects.all()
     return render(request, 'productss.html',{"phones":phones})
+
+
+def product_details(request):
+    phones =Product.objects.all()
+    return render(request, 'productss.html',{"phones":phones})
+
+def search_results(request):
+    phones =Product.objects.all()
+    return render(request, 'productss.html',{"phones":phones})
+
+def problem_solutions(request):
+    phones =Product.objects.all()
+    return render(request, 'productss.html',{"phones":phones})
