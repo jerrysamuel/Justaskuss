@@ -10,7 +10,7 @@ def index(request):
         'categories': categories,
         'phones': phones
     }
-    return render(request, 'products/index.html')
+    return render(request, 'products/index.html', context)
 
 def productss(request):
     categories = Company.objects.all()
@@ -24,11 +24,10 @@ def productss(request):
     query = request.GET.get('query', '')
 
     if query:
-        phones = phones.filter(Q(name__icontains=query))
+        phones = phones.filter(Q(price__icontains=query))
 
     context = {
         'categories': categories,
         'phones': phones
-        'active_category': active_category
     }
     return render(request, 'products/productss.html', context)

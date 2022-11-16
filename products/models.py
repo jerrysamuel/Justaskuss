@@ -15,7 +15,7 @@ class Company(models.Model):
         return self.company_name
 
 class Product(models.Model):
-    phone_company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    category = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     release_date = models.CharField(max_length=100)
     slug = models.SlugField()
@@ -33,8 +33,8 @@ class Product(models.Model):
     memory= models.CharField(max_length=255, blank=True)
     video= models.CharField(max_length=255, blank=True)
     slots= models.CharField(max_length=255, blank=True)
-    phone_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
-    thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
+    phone_image = models.ImageField(upload_to="media/uploads/", blank=True, null=True)
+    thumbnail = models.ImageField(upload_to="media/uploads/", blank=True, null=True)
     
 
     class Meta:
@@ -48,7 +48,7 @@ class Product(models.Model):
             return self.thumbnail.url
         else:
             if self.phone_image:
-                self.thumnail = self.make_thumbnail(self.phone_image)
+                self.thumbnail = self.make_thumbnail(self.phone_image)
                 self.save()
 
                 return self.thumbnail.url
@@ -56,14 +56,14 @@ class Product(models.Model):
                 return 'https://via.placeholder.com/240x240x.jpg'
 
     def make_thumbnail(self, image, size=(300, 300)):
-        img = Image.open(phone_image)
+        img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
 
         thumb_io = BytesIO()
         img.save(thumb_io, 'JPEG', quality=85)
 
-        thumbnail = file(thumb_io, name=phone_image.name)
+        thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
 
