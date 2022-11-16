@@ -5,7 +5,7 @@ from django.core.files import File
 
 class Company(models.Model):
     company_name = models.CharField(max_length=45)
-    company_details= models.TextField(max_length= 255)
+    slug = models.SlugField()
 
 
     class Meta:
@@ -18,6 +18,7 @@ class Product(models.Model):
     phone_company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     release_date = models.CharField(max_length=100)
+    slug = models.SlugField()
     price = models.CharField(max_length=30)
     front_camera= models.CharField(max_length=100, blank=True)
     rear_camera= models.CharField(max_length=100, blank=True)

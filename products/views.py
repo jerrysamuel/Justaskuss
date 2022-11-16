@@ -1,23 +1,34 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Company
+from django.db.models import Q
 
 def index(request):
-    phones =Product.objects.all()
-    return render(request, 'index.html',{"phones":phones})
+    categories = Company.objects.all()
+    phones = Product.objects.all()
+
+    context = {
+        'categories': categories,
+        'phones': phones
+    }
+    return render(request, 'products/index.html')
 
 def productss(request):
-    phones =Product.objects.all()
-    return render(request, 'productss.html',{"phones":phones})
+    categories = Company.objects.all()
+    phones = Product.objects.all()
 
+    active_category = request.GET.get('category', '')
 
-def product_details(request):
-    phones =Product.objects.all()
-    return render(request, 'productss.html',{"phones":phones})
+    if active_category:
+        phones = phones.filter(category__slug=active_category)
 
-def search_results(request):
-    phones =Product.objects.all()
-    return render(request, 'productss.html',{"phones":phones})
+    query = request.GET.get('query', '')
 
-def problem_solutions(request):
-    phones =Product.objects.all()
-    return render(request, 'productss.html',{"phones":phones})
+    if query:
+        phones = phones.filter(Q(name__icontains=query))
+
+    context = {
+        'categories': categories,
+        'phones': phones
+        'active_category': active_category
+    }
+    return render(request, 'products/productss.html', context)
